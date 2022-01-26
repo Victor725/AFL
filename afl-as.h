@@ -127,8 +127,8 @@ static const u8* trampoline_fmt_32 =
   /*"movl $0x%08x, %%ecx\n"*/
   //--------------Modified-----------------
   //put current addr into ecx
-  "call _next_ins\n"
-  "_next_ins:\n"
+  "call my_next_ins\n"
+  "my_next_ins:\n"
   "pop %%ecx\n"//<- ecx points to this inst
   //---------------------------------------
   "call __afl_maybe_log\n"
@@ -155,8 +155,8 @@ static const u8* trampoline_fmt_64 =
   //"movq $0x%08x, %%rcx\n"
   //--------------Modified-----------------
   //put current addr into ecx
-  "call _next_ins\n"
-  "_next_ins:\n"
+  "call my_next_ins\n"
+  "my_next_ins:\n"
   "pop %%rcx\n"//<- rcx points to this inst
   //---------------------------------------
   "call __afl_maybe_log\n"
