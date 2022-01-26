@@ -111,7 +111,7 @@
    oddball register it may touch.
 
  */
-
+//modified
 static const u8* trampoline_fmt_32 =
 
   "\n"
@@ -124,7 +124,12 @@ static const u8* trampoline_fmt_32 =
   "movl %%edx,  4(%%esp)\n"
   "movl %%ecx,  8(%%esp)\n"
   "movl %%eax, 12(%%esp)\n"
-  "movl $0x%08x, %%ecx\n"
+  /*"movl $0x%08x, %%ecx\n"*/
+  //--------------Modified-----------------
+  //put current addr into ecx
+  "call next_ins\n"
+  "pop %%ecx\n"//<- ecx points to this inst
+  //---------------------------------------
   "call __afl_maybe_log\n"
   "movl 12(%%esp), %%eax\n"
   "movl  8(%%esp), %%ecx\n"
@@ -134,7 +139,7 @@ static const u8* trampoline_fmt_32 =
   "\n"
   "/* --- END --- */\n"
   "\n";
-
+//modified
 static const u8* trampoline_fmt_64 =
 
   "\n"
@@ -146,7 +151,12 @@ static const u8* trampoline_fmt_64 =
   "movq %%rdx,  0(%%rsp)\n"
   "movq %%rcx,  8(%%rsp)\n"
   "movq %%rax, 16(%%rsp)\n"
-  "movq $0x%08x, %%rcx\n"
+  //"movq $0x%08x, %%rcx\n"
+  //--------------Modified-----------------
+  //put current addr into ecx
+  "call next_ins\n"
+  "pop %%rcx\n"//<- rcx points to this inst
+  //---------------------------------------
   "call __afl_maybe_log\n"
   "movq 16(%%rsp), %%rax\n"
   "movq  8(%%rsp), %%rcx\n"
