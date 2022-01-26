@@ -157,7 +157,7 @@ static const u8* trampoline_fmt_64 =
   /*//put current addr into ecx
   "call my_next_ins\n"
   "my_next_ins: pop %%rcx\n"//<- rcx points to this inst*/
-  "movq %%rip, %%rcx\n"
+  "mov %%rip, %%rcx\n"
   //---------------------------------------
   "call __afl_maybe_log\n"
   "movq 16(%%rsp), %%rax\n"
