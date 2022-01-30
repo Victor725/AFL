@@ -375,8 +375,9 @@ static void add_instrumentation(void) {
           //-----------------MODIFIED-----------------------
           unsigned int rand = R(MAP_SIZE);
           unsigned int k = rand;
+          char s[] = "111";
          fprintf(outf, use_64bit ? trampoline_fmt_64 : trampoline_fmt_32,
-                rand, k);
+                s, s);
 
         ins_lines++;
 
