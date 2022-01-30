@@ -372,9 +372,10 @@ static void add_instrumentation(void) {
     if (line[0] == '\t') {
 
       if (line[1] == 'j' && line[2] != 'm' && R(100) < inst_ratio) {
-
-        fprintf(outf, use_64bit ? trampoline_fmt_64 : trampoline_fmt_32,
-                R(MAP_SIZE));
+          //-----------------MODIFIED-----------------------
+          unsigned int rand = R(MAP_SIZE);
+         fprintf(outf, use_64bit ? trampoline_fmt_64 : trampoline_fmt_32,
+                rand);
 
         ins_lines++;
 

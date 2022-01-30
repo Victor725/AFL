@@ -1,6 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\qemu_mode",
+    "\\qemu_mode\\patches"
   ],
   "SelectedNode": "\\afl-as.h",
   "PreviewInSolutionExplorer": false
