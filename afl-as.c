@@ -374,8 +374,9 @@ static void add_instrumentation(void) {
       if (line[1] == 'j' && line[2] != 'm' && R(100) < inst_ratio) {
           //-----------------MODIFIED-----------------------
           unsigned int rand = R(MAP_SIZE);
+          unsigned int k = rand;
          fprintf(outf, use_64bit ? trampoline_fmt_64 : trampoline_fmt_32,
-                rand, rand);
+                rand, k);
 
         ins_lines++;
 
