@@ -266,7 +266,7 @@ static void add_instrumentation(void) {
 
     if (!pass_thru && !skip_intel && !skip_app && !skip_csect && instr_ok &&
         instrument_next && line[0] == '\t' && isalpha(line[1])) {
-
+        //-----------------MODIFIED-------------------
         unsigned int rand = R(MAP_SIZE);
         fprintf(outf, use_64bit ? trampoline_fmt_64 : trampoline_fmt_32,
             rand, rand, rand);
