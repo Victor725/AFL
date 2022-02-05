@@ -197,6 +197,62 @@ static const u8* main_payload_32 =
   "     and we use it on 64-bit systems; but it's slower for 32-bit ones. */\n"
   "\n"
 #ifndef COVERAGE_ONLY
+  //------------------MODIFIED-----------------------
+  //write ecx to a file
+    /*"movl %%edi,  0(%%esp)\n"
+    "movl %%edx,  4(%%esp)\n"
+    "movl %%ecx,  8(%%esp)\n"
+    "movl %%eax, 12(%%esp)\n"*/
+    "push %%eax\n"
+    "push %%ecx\n"
+    "push %%edx\n"
+    "push %%edi\n"
+
+    //begin
+    //save "a"
+    "push 0x97\n"
+
+    //save "log"
+    "push 0x00676F6C\n"
+    
+    //call fopen("log","a")
+    "lea 0(%%esp), esi\n"
+    "lea 4(%%esp), edi\n"
+    "call fopen\n"   //eax=fp
+
+    "movl %%eax, %%ecx\n" //ecx=fp of ./log
+    //call getpid
+    "call getpid\n" //eax= cur process id
+
+    //call fprintf    fp(edi) format(esi) procid(edx) prev_addr(ecx)
+    "movl %%ecx, %%edi\n"
+    "movl 16(%%esp), %%ecx\n"
+    "push 0\n"
+    "push 0x6E5C6425\n"
+    "push 0x203A6425\n"
+
+    "lea 0(%%esp), %%esi\n"
+    "push %%edi\n"
+    "movl %%eax, %%edx\n"
+
+    "call fprintf\n"
+
+    //call fclose
+    "pop %%edi\n"
+    "call fclose\n"
+
+    "pop %%edi\n"
+    "pop %%edi\n"
+    "pop %%edi\n"
+    "pop %%edi\n"
+    "pop %%edi\n"
+
+    "push %%edi\n"
+    "push %%edx\n"
+    "push %%ecx\n"
+    "push %%eax\n"
+
+  //-------------------------------------------------
   "  movl __afl_prev_loc, %edi\n"
   "  xorl %ecx, %edi\n"
   "  shrl $1, %ecx\n"
@@ -428,6 +484,62 @@ static const u8* main_payload_64 =
   "  /* Calculate and store hit for the code location specified in rcx. */\n"
   "\n"
 #ifndef COVERAGE_ONLY
+    //------------------MODIFIED-----------------------
+  //write ecx to a file
+    /*"movl %%edi,  0(%%esp)\n"
+    "movl %%edx,  4(%%esp)\n"
+    "movl %%ecx,  8(%%esp)\n"
+    "movl %%eax, 12(%%esp)\n"*/
+    "push %%rax\n"
+    "push %%rcx\n"
+    "push %%rdx\n"
+    "push %%rdi\n"
+
+    //begin
+    //save "a"
+    "push 0x97\n"
+
+    //save "log"
+    "push 0x00676F6C\n"
+
+    //call fopen("log","a")
+    "lea 0(%%rsp), rsi\n"
+    "lea 8(%%rsp), rdi\n"
+    "call fopen\n"   //eax=fp
+
+    "movl %%rax, %%rcx\n" //ecx=fp of ./log
+    //call getpid
+    "call getpid\n" //eax= cur process id
+
+    //call fprintf    fp(edi) format(esi) procid(edx) prev_addr(ecx)
+    "movl %%rcx, %%rdi\n"
+    "movl 32(%%rsp), %%rcx\n"
+    "push 0\n"
+    "push 0x6E5C6425\n"
+    "push 0x203A6425\n"
+
+    "lea 0(%%0sp), %%rsi\n"
+    "push %%rdi\n"
+    "movl %%rax, %%rdx\n"
+
+    "call fprintf\n"
+
+    //call fclose
+    "pop %%rdi\n"
+    "call fclose\n"
+
+    "pop %%rdi\n"
+    "pop %%rdi\n"
+    "pop %%rdi\n"
+    "pop %%rdi\n"
+    "pop %%rdi\n"
+
+    "pop %%rdi\n"
+    "pop %%rdx\n"
+    "pop %%rcx\n"
+    "pop %%rax\n"
+
+    //-------------------------------------------------
   "  xorq __afl_prev_loc(%rip), %rcx\n"
   "  xorq %rcx, __afl_prev_loc(%rip)\n"
   "  shrq $1, __afl_prev_loc(%rip)\n"
